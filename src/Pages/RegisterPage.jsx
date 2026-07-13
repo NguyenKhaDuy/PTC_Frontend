@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Phone, Lock, Eye } from "lucide-react";
 import { useState } from "react";
-import logo from "../assets/CMC_LOGO.png";
+import logo from "../assets/PTC_LOGO.png";
 import OTPVerification from "./OTPVerification";
 import { useToast } from "../Components/Common/ToastProvider";
 import GlobalLoading from "../Components/Common/GlobalLoading";
@@ -98,7 +98,7 @@ export default function RegisterPage() {
           />
 
           <h1 className="mt-8 text-5xl font-black bg-gradient-to-r from-[#d8bf84] via-[#AA7D36] to-[#8f6424] bg-clip-text text-transparent">
-            CMC CINEMA
+            PTC CINEMA
           </h1>
 
           <p className="text-gray-400 text-center mt-8 leading-8 max-w-md">

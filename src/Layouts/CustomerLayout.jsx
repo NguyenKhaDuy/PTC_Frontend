@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 import Navbar from "../Components/User/Navbar";
 import Footer from "../Components/User/Footer";
-import CmcAI from "../Components/User/CmcAI";
 
 export default function CustomerLayout() {
   const navigate = useNavigate();
@@ -25,7 +24,6 @@ export default function CustomerLayout() {
       </main>
 
       <Footer />
-      <CmcAI />
     </div>
   );
 }

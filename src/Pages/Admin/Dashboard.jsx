@@ -122,7 +122,7 @@ export default function Dashboard() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-          <p className="text-gray-400 mt-1">Thống kê hệ thống CMC Cinema</p>
+          <p className="text-gray-400 mt-1">Thống kê hệ thống PTC Cinema</p>
         </div>
 
         <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#181818] border border-[#2a2a2a]">

@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/CMC_LOGO.png";
+import logo from "../../assets/PTC_LOGO.png";
 
 const menus = [
   {
@@ -108,7 +108,7 @@ export default function AdminSidebar() {
     <aside className="w-72 bg-[#0B1120] border-r border-[#1f2937] flex flex-col">
       <div className="h-20 flex items-center justify-center gap-3 border-b border-[#1f2937]">
         <img src={logo} alt="logo" className="w-12" />
-        <span className="font-bold text-xl">CMC ADMIN</span>
+        <span className="font-bold text-xl">PTC ADMIN</span>
       </div>
 
       <nav className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-[#AA7D36] scrollbar-track-transparent">
