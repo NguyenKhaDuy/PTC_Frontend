@@ -1,16 +1,16 @@
 export default function HeroSection() {
   return (
-    <div className="relative h-[260px] md:h-[340px] overflow-hidden">
-      <img
-        src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
-        className="w-full h-full object-cover opacity-40"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-black/50 to-black/30 flex flex-col justify-center items-center text-center px-4">
-        <h1 className="text-3xl md:text-5xl font-black text-[#AA7D36]">
-          KHUYẾN MÃI HOT
-        </h1>
-        <p className="text-gray-300 mt-2">
-          Ưu đãi đặc biệt dành cho bạn mỗi tuần
+    <div className="relative overflow-hidden bg-gradient-to-r from-[#151515] to-[#0f0f0f] py-20">
+      <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#AA7D36]/20 blur-[120px]" />
+
+      <div className="relative mx-auto max-w-6xl px-6">
+        <p className="text-[#AA7D36] uppercase tracking-[6px]">Promotions</p>
+
+        <h1 className="mt-4 text-6xl font-black">Voucher ưu đãi</h1>
+
+        <p className="mt-5 max-w-xl text-lg text-gray-400">
+          Nhận ngay các mã giảm giá mới nhất dành cho thành viên và áp dụng khi
+          đặt vé trực tuyến.
         </p>
       </div>
     </div>
