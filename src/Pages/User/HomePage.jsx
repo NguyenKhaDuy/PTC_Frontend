@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import BannerSlider from "../../Components/User/BannerSlider";
-import QuickBooking from "../../Components/User/QuickBooking";
+import FeatureSection from "../../Components/User/FeatureSection";
 import MovieSection from "../../Components/User/MovieSection";
 import PromotionBanner from "../../Components/User/PromotionBanner";
 import NewsSection from "../../Components/User/NewsSection";
@@ -10,16 +10,15 @@ import GlobalLoading from "../../Components/Common/GlobalLoading";
 import { MdLocalMovies } from "react-icons/md";
 
 export default function HomePage() {
-  const [nowShowing, setNowShowing] = useState([]);
-  const [comingSoon, setComingSoon] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchMovies = async (pageNumber = 1) => {
+  const fetchMovies = async () => {
     try {
       setLoading(true);
 
       const res = await fetch(
-        `http://localhost:3000/api/movie?page=${pageNumber}`,
+        "http://localhost:3000/api/movie?page=1&size=100",
       );
 
       const data = await res.json();
@@ -28,13 +27,15 @@ export default function HomePage() {
         throw new Error(data?.message || "Lỗi tải danh sách phim");
       }
 
-      const movies = data?.data || [];
+      const movieList = data?.data || [];
 
-      // Đang chiếu
-      setNowShowing(movies.filter((movie) => movie.showing === true));
+      const showingMovies = movieList.filter((movie) => movie.showing);
+      const comingSoonMovies = movieList.filter((movie) => !movie.showing);
 
-      // Sắp chiếu
-      setComingSoon(movies.filter((movie) => movie.showing === false));
+      // Ưu tiên phim đang chiếu, nếu chưa đủ 4 thì lấy thêm phim sắp chiếu
+      const homeMovies = [...showingMovies, ...comingSoonMovies].slice(0, 4);
+
+      setMovies(homeMovies);
     } catch (err) {
       console.error(err);
     } finally {
@@ -50,21 +51,16 @@ export default function HomePage() {
     <main className="bg-[#0B0B0B] text-white min-h-screen">
       <BannerSlider />
 
-      <QuickBooking />
+      <FeatureSection />
 
       <MovieSection
-        title="Phim đang chiếu"
+        title="Phim nổi bật"
         icon={<MdLocalMovies size={28} className="text-[#AA7D36]" />}
-        movies={nowShowing}
+        movies={movies}
+        showViewAll
       />
 
       <PromotionBanner />
-
-      <MovieSection
-        title="Phim sắp chiếu"
-        icon={<MdLocalMovies size={28} className="text-[#AA7D36]" />}
-        movies={comingSoon}
-      />
 
       <NewsSection />
 

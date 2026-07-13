@@ -1,29 +1,58 @@
-import { Ticket, Tag } from "lucide-react";
+import { CalendarDays, Percent, TicketPercent, Package } from "lucide-react";
+import { useToast } from "../../Components/Common/ToastProvider";
+
+function formatDate(date) {
+  return `${date[2]}/${date[1]}/${date[0]}`;
+}
 
 export default function PromotionCard({ item }) {
+  const { showToast } = useToast();
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(item.code);
+    showToast("Đã sao chép mã", "success");
+  };
   return (
-    <div className="bg-[#141414] rounded-2xl overflow-hidden border border-[#222] hover:border-[#AA7D36]/50 transition group">
-      {/* image */}
-      <div className="h-44 overflow-hidden">
-        <img
-          src={item.image}
-          className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-        />
+    <div className="group overflow-hidden rounded-3xl border border-[#AA7D36]/20 bg-[#151515] transition hover:-translate-y-2 hover:border-[#AA7D36] hover:shadow-[0_15px_40px_rgba(170,125,54,.18)]">
+      <div className="bg-gradient-to-r from-[#AA7D36] to-[#c79b4a] p-6 text-black">
+        <div className="flex items-center justify-between">
+          <TicketPercent size={34} />
+
+          <div className="text-right">
+            <h2 className="text-4xl font-black">{item.discount}%</h2>
+
+            <p className="text-sm font-semibold">OFF</p>
+          </div>
+        </div>
       </div>
 
-      {/* content */}
-      <div className="p-4">
-        <div className="flex items-center gap-2 text-[#AA7D36] text-xs mb-2">
-          <Tag size={14} />
-          <span className="uppercase">{item.type}</span>
+      <div className="space-y-4 p-6">
+        <div>
+          <p className="text-xs uppercase tracking-widest text-gray-400">
+            Mã voucher
+          </p>
+
+          <h3 className="mt-1 text-2xl font-bold tracking-wider text-[#AA7D36]">
+            {item.code}
+          </h3>
         </div>
 
-        <h3 className="text-lg font-bold">{item.title}</h3>
-        <p className="text-gray-400 text-sm mt-1">{item.desc}</p>
+        <div className="grid gap-3">
+          <div className="flex items-center gap-3 text-gray-300">
+            <CalendarDays size={18} className="text-[#AA7D36]" />
+            <span>HSD: {formatDate(item.expiration)}</span>
+          </div>
 
-        <button className="mt-4 w-full py-2 rounded-lg bg-[#AA7D36] text-white font-semibold flex items-center justify-center gap-2">
-          <Ticket size={16} />
-          Lấy ưu đãi
+          <div className="flex items-center gap-3 text-gray-300">
+            <Package size={18} className="text-[#AA7D36]" />
+            <span>Còn {item.quality} lượt sử dụng</span>
+          </div>
+        </div>
+
+        <button
+          onClick={handleCopy}
+          className="mt-2 w-full rounded-xl bg-[#AA7D36] py-3 font-semibold text-white transition hover:bg-[#8f6424]"
+        >
+          Sao chép mã
         </button>
       </div>
     </div>

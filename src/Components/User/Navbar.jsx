@@ -126,12 +126,6 @@ export default function Navbar() {
               <>
                 {isAuth ? (
                   <>
-                    {/* Bell */}
-                    <button className="relative w-10 h-10 rounded-full bg-[#AA7D36]/10 text-[#AA7D36] flex items-center justify-center">
-                      <Bell size={18} />
-                      <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
-                    </button>
-
                     {/* Ticket */}
                     <button
                       onClick={() => navigate("/movies")}
