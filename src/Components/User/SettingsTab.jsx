@@ -1,15 +1,17 @@
-import {
-  ChevronRight,
-  LogOut,
-  Lock,
-  Bell,
-  User,
-  Monitor,
-  Shield,
-  Trash2,
-} from "lucide-react";
+import { ChevronRight, LogOut, Lock } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "../Common/ToastProvider";
+import GlobalLoading from "../Common/GlobalLoading";
 
 export default function SettingsTab({ navigate }) {
+  const { showToast } = useToast();
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [loading, setLoading] = useState(false);
   const handleLogout = async () => {
     try {
       await fetch("http://localhost:3000/api/logout", {
@@ -85,62 +87,168 @@ export default function SettingsTab({ navigate }) {
     );
   };
 
+  const handleChangePassword = async () => {
+    if (
+      !passwordForm.oldPassword ||
+      !passwordForm.newPassword ||
+      !passwordForm.confirmPassword
+    ) {
+      showToast("Vui lòng nhập đầy đủ thông tin", "error");
+      return;
+    }
+
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      showToast("Xác nhận mật khẩu không khớp", "error");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      const res = await fetch("http://localhost:3000/api/password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          idUser: user.idUser,
+          oldPassword: passwordForm.oldPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+
+      showToast("Đổi mật khẩu thành công", "success");
+
+      setShowPasswordModal(false);
+
+      setPasswordForm({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (err) {
+      showToast(err.message, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-      <h3 className="text-2xl font-bold mb-6 text-white">Cài đặt tài khoản</h3>
+    <>
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+        <h3 className="text-2xl font-bold mb-6 text-white">
+          Cài đặt tài khoản
+        </h3>
 
-      <div className="space-y-4">
-        <Item
-          icon={User}
-          title="Thông tin tài khoản"
-          description="Cập nhật tên, email, số điện thoại"
-          onClick={() => alert("Mở thông tin tài khoản")}
-        />
+        <div className="space-y-4">
+          <Item
+            icon={Lock}
+            title="Đổi mật khẩu"
+            description="Thay đổi mật khẩu đăng nhập"
+            onClick={() => setShowPasswordModal(true)}
+          />
 
-        <Item
-          icon={Lock}
-          title="Đổi mật khẩu"
-          description="Thay đổi mật khẩu đăng nhập"
-          onClick={() => alert("Đổi mật khẩu")}
-        />
-
-        <Item
-          icon={Bell}
-          title="Thông báo"
-          description="Quản lý email và thông báo ứng dụng"
-          onClick={() => alert("Thông báo")}
-        />
-
-        <Item
-          icon={Monitor}
-          title="Giao diện"
-          description="Dark mode, ngôn ngữ..."
-          onClick={() => alert("Giao diện")}
-        />
-
-        <Item
-          icon={Shield}
-          title="Bảo mật"
-          description="Thiết bị đăng nhập và bảo mật tài khoản"
-          onClick={() => alert("Bảo mật")}
-        />
-
-        <Item
-          icon={LogOut}
-          title="Đăng xuất"
-          description="Kết thúc phiên đăng nhập hiện tại"
-          onClick={handleLogout}
-          warning
-        />
-
-        <Item
-          icon={Trash2}
-          title="Xóa tài khoản"
-          description="Thao tác này không thể hoàn tác"
-          onClick={() => alert("Xóa tài khoản")}
-          danger
-        />
+          <Item
+            icon={LogOut}
+            title="Đăng xuất"
+            description="Kết thúc phiên đăng nhập hiện tại"
+            onClick={handleLogout}
+            warning
+          />
+        </div>
       </div>
-    </div>
+
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-3xl border border-[#AA7D36]/20 bg-[#181818] p-8">
+            <h2 className="mb-6 text-2xl font-bold text-white">Đổi mật khẩu</h2>
+
+            <div className="space-y-5">
+              <div>
+                <label className="mb-2 block text-sm text-gray-400">
+                  Mật khẩu hiện tại
+                </label>
+
+                <input
+                  type="password"
+                  value={passwordForm.oldPassword}
+                  onChange={(e) =>
+                    setPasswordForm({
+                      ...passwordForm,
+                      oldPassword: e.target.value,
+                    })
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-[#222] px-4 py-3 text-white outline-none focus:border-[#AA7D36]"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm text-gray-400">
+                  Mật khẩu mới
+                </label>
+
+                <input
+                  type="password"
+                  value={passwordForm.newPassword}
+                  onChange={(e) =>
+                    setPasswordForm({
+                      ...passwordForm,
+                      newPassword: e.target.value,
+                    })
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-[#222] px-4 py-3 text-white outline-none focus:border-[#AA7D36]"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm text-gray-400">
+                  Xác nhận mật khẩu
+                </label>
+
+                <input
+                  type="password"
+                  value={passwordForm.confirmPassword}
+                  onChange={(e) =>
+                    setPasswordForm({
+                      ...passwordForm,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-[#222] px-4 py-3 text-white outline-none focus:border-[#AA7D36]"
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-end gap-3">
+              <button
+                onClick={() => setShowPasswordModal(false)}
+                className="rounded-xl border border-white/10 px-5 py-3 text-white"
+              >
+                Hủy
+              </button>
+
+              <button
+                onClick={handleChangePassword}
+                disabled={loading}
+                className="rounded-xl bg-[#AA7D36] px-5 py-3 font-semibold text-white hover:bg-[#8f6424]"
+              >
+                {loading ? "Đang cập nhật..." : "Cập nhật"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {loading && <GlobalLoading open={loading} text="Đang xử lý..." />}
+    </>
   );
 }
