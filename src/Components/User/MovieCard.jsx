@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/CMC_LOGO.png";
+import logo from "../../assets/PTC_LOGO.png";
 import GlobalLoading from "../../Components/Common/GlobalLoading"
 import { useState } from "react";
 

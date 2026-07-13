@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Heart, Search, UserCircle2, Ticket, Menu, Bell, X } from "lucide-react";
-import logo from "../../assets/CMC_LOGO.png";
+import logo from "../../assets/PTC_LOGO.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -92,7 +92,7 @@ export default function Navbar() {
             />
             <div className="leading-tight">
               <h1 className="text-base md:text-xl font-black bg-gradient-to-r from-[#d8bf84] via-[#AA7D36] to-[#8f6424] bg-clip-text text-transparent">
-                CA MAU CINEMA
+                PTC CINEMA
               </h1>
               <p className="hidden md:block text-[10px] tracking-[5px] text-[#c9ab73]">
                 Premium Movie Experience

@@ -61,7 +61,7 @@ export default function PaymentPage() {
 
         {/* SMALL FOOTER TEXT */}
         <p className="text-center text-xs text-gray-500 mt-5">
-          CMC Cinema Payment System
+          PTC Cinema Payment System
         </p>
       </div>
     </div>

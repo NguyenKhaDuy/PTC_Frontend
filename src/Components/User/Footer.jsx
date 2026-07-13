@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 
-import logo from "../../assets/CMC_LOGO.png";
+import logo from "../../assets/PTC_LOGO.png";
 
 export default function Footer() {
   return (
@@ -14,13 +14,13 @@ export default function Footer() {
             <Link to="/" className="flex items-center gap-4">
               <img
                 src={logo}
-                alt="CMC Cinema"
+                alt="PTC Cinema"
                 className="w-24 h-24 object-contain"
               />
 
               <div>
                 <h2 className="text-2xl font-black bg-gradient-to-r from-[#d8bf84] via-[#AA7D36] to-[#8f6424] bg-clip-text text-transparent">
-                  CA MAU CINEMA
+                  PTC CINEMA
                 </h2>
 
                 <p className="text-xs tracking-[4px] text-[#c9ab73] uppercase mt-1">
@@ -30,7 +30,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-gray-400 mt-6 leading-7">
-              CMC Cinema mang đến trải nghiệm xem phim hiện đại với hệ thống
+              PTC Cinema mang đến trải nghiệm xem phim hiện đại với hệ thống
               phòng chiếu chất lượng cao, âm thanh Dolby Atmos và dịch vụ chuyên
               nghiệp.
             </p>
@@ -88,7 +88,7 @@ export default function Footer() {
             <div className="space-y-5 text-gray-400">
               <div className="flex items-center gap-3">
                 <MapPin className="text-[#AA7D36]" size={18} />
-                <span>01 Lý Thường Kiệt, TP. Cà Mau</span>
+                <span>01 Lý Tự Trọng, TP. Cần Thơ</span>
               </div>
 
               <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ export default function Footer() {
 
               <div className="flex items-center gap-3">
                 <Mail className="text-[#AA7D36]" size={18} />
-                <span>support@cmccinema.vn</span>
+                <span>support@ptccinema.vn</span>
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-14 pt-8 border-t border-[#AA7D36]/20 flex flex-col lg:flex-row justify-between items-center gap-5">
           <p className="text-gray-500 text-sm">
-            © 2026 CMC Cinema. All Rights Reserved.
+            © 2026 PTC Cinema. All Rights Reserved.
           </p>
 
           <div className="flex gap-8 text-sm text-gray-500">

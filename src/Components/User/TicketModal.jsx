@@ -60,7 +60,7 @@ export default function TicketModal({ ticket, onClose }) {
 
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(22);
-    pdf.text("CMC CINEMA", 105, 18, { align: "center" });
+    pdf.text("PTC CINEMA", 105, 18, { align: "center" });
 
     pdf.setFontSize(16);
     pdf.text(movie.nameMovie, 20, 35);

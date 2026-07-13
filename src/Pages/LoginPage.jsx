@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../Components/Common/ToastProvider";
 import GlobalLoading from "../Components/Common/GlobalLoading"
 
-import logo from "../assets/CMC_LOGO.png";
+import logo from "../assets/PTC_LOGO.png";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -84,7 +84,7 @@ export default function LoginPage() {
           />
 
           <h1 className="mt-8 text-5xl font-black bg-gradient-to-r from-[#d8bf84] via-[#AA7D36] to-[#8f6424] bg-clip-text text-transparent">
-            CMC CINEMA
+            PTC CINEMA
           </h1>
 
           <p className="text-gray-400 mt-6 text-center leading-8">
@@ -99,7 +99,7 @@ export default function LoginPage() {
           <h2 className="text-4xl font-bold text-white">Đăng nhập</h2>
 
           <p className="text-gray-400 mt-3">
-            Chào mừng bạn quay trở lại CMC Cinema.
+            Chào mừng bạn quay trở lại PTC Cinema.
           </p>
 
           <form className="mt-10 space-y-6">
