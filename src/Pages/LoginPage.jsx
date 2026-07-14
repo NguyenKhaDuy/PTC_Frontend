@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../Components/Common/ToastProvider";
 import GlobalLoading from "../Components/Common/GlobalLoading";
 
-import logo from "../assets/CMC_LOGO.png";
+import logo from "../assets/PTC_LOGO.png";
 import { useState } from "react";
 
 export default function LoginPage() {

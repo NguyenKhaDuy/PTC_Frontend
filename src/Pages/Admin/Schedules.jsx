@@ -67,6 +67,9 @@ export default function Schedules() {
   const [deletingId, setDeletingId] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  const [pageNo, setPageNo] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   /* ================== API ================== */
 
   const fetchBranches = async () => {
@@ -113,27 +116,38 @@ export default function Schedules() {
     }
   };
 
-  const fetchSchedules = async (movieId) => {
+  const fetchSchedules = async (movieId, page = pageNo) => {
     if (!movieId) return;
 
     setLoading(true);
+
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/admin/schedule/id-movie=${movieId}?pageNo=1`,
-        { headers: { Authorization: `Bearer ${token}` } },
+        `http://localhost:3000/api/admin/schedule/id-movie=${movieId}?pageNo=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
 
-      const data = res.data.data.filter(
-        (item) => item.roomDTO?.branchDTO?.idBranch === Number(selectedBranch),
-      );
-
-      setSchedules(data);
-    } catch (err) {
-      console.log(err);
+    setSchedules(res.data.data);
+    setTotalPages(res.data.total_page);
+    setPageNo(res.data.current_page); // trang hiện tại
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (selectedMovie) {
+      fetchSchedules(selectedMovie, pageNo);
+    }
+  }, [selectedMovie, pageNo]);
+
+  useEffect(() => {
+    setPageNo(1);
+  }, [selectedMovie]);
 
   const fetchScheduleDetail = async (id) => {
     try {
@@ -307,6 +321,36 @@ export default function Schedules() {
         }}
         onConfirm={handleDelete}
       />
+
+      <div className="flex justify-center items-center gap-2 mt-6">
+        <button
+          disabled={pageNo === 1}
+          onClick={() => setPageNo(pageNo - 1)}
+          className="px-4 py-2 rounded bg-[#222] disabled:opacity-40"
+        >
+          Trước
+        </button>
+
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setPageNo(index + 1)}
+            className={`w-10 h-10 rounded ${
+              pageNo === index + 1 ? "bg-[#AA7D36]" : "bg-[#222]"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          disabled={pageNo === totalPages}
+          onClick={() => setPageNo(pageNo + 1)}
+          className="px-4 py-2 rounded bg-[#222] disabled:opacity-40"
+        >
+          Sau
+        </button>
+      </div>
 
       {/* LOADING */}
       {loading && <GlobalLoading open={loading} text="Đang xử lý..." />}
