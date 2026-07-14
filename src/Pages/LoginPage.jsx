@@ -1,7 +1,7 @@
 import { Mail, Lock, Eye } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../Components/Common/ToastProvider";
-import GlobalLoading from "../Components/Common/GlobalLoading"
+import GlobalLoading from "../Components/Common/GlobalLoading";
 
 import logo from "../assets/PTC_LOGO.png";
 import { useState } from "react";
@@ -39,6 +39,7 @@ export default function LoginPage() {
 
       if (!res.ok || data?.status !== "OK") {
         showToast(data?.message || "Login failed", "error");
+        setLoading(false);
         return;
       }
 
@@ -51,13 +52,15 @@ export default function LoginPage() {
 
       if (roles.includes("ADMIN")) {
         navigate("/admin");
-      } 
-      if(roles.includes("CUSTOMER")){
+      }
+      if (roles.includes("CUSTOMER")) {
         navigate("/");
       }
     } catch (err) {
       console.error(err);
       showToast("Server error", "error");
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
   };
@@ -84,7 +87,7 @@ export default function LoginPage() {
           />
 
           <h1 className="mt-8 text-5xl font-black bg-gradient-to-r from-[#d8bf84] via-[#AA7D36] to-[#8f6424] bg-clip-text text-transparent">
-            PTC CINEMA
+            CMC CINEMA
           </h1>
 
           <p className="text-gray-400 mt-6 text-center leading-8">
@@ -99,7 +102,7 @@ export default function LoginPage() {
           <h2 className="text-4xl font-bold text-white">Đăng nhập</h2>
 
           <p className="text-gray-400 mt-3">
-            Chào mừng bạn quay trở lại PTC Cinema.
+            Chào mừng bạn quay trở lại CMC Cinema.
           </p>
 
           <form className="mt-10 space-y-6">

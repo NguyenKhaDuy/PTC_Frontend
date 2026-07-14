@@ -10,6 +10,7 @@ export default function ScheduleList({ schedules, handlers }) {
           onView={() => handlers.view(item.idSchedule)}
           onEdit={() => handlers.edit(item)}
           onDelete={() => handlers.delete(item.idSchedule)}
+          onToggleStatus={() => handlers.toggleStatus(item)}
         />
       ))}
     </div>

@@ -8,26 +8,23 @@ import {
   Eye,
   Pencil,
   Trash2,
+  Lock,
+  LockOpen,
 } from "lucide-react";
 
 import { formatDate, formatTime } from "../../Utils/format";
-
-export default function ScheduleCard({ item, onView, onEdit, onDelete }) {
+export default function ScheduleCard({
+  item,
+  onView,
+  onEdit,
+  onDelete,
+  onToggleStatus,
+}) {
   const totalSeat = Number(item.roomDTO?.capacity ?? 0);
   const soldSeat = Number(item.soldSeats ?? 0);
 
   const percent =
     totalSeat > 0 ? Math.min(100, Math.round((soldSeat / totalSeat) * 100)) : 0;
-
-  const scheduleDate = Array.isArray(item.date)
-    ? new Date(item.date[0], item.date[1] - 1, item.date[2])
-    : new Date(item.date);
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  scheduleDate.setHours(0, 0, 0, 0);
-
-  const status = scheduleDate >= today ? "Đang mở bán" : "Đã chiếu";
 
   return (
     <div className="bg-[#181818] border border-[#2d2d2d] rounded-2xl p-5">
@@ -84,12 +81,12 @@ export default function ScheduleCard({ item, onView, onEdit, onDelete }) {
             {/* STATUS */}
             <span
               className={`px-4 py-2 rounded-full text-sm h-fit ${
-                status === "Đang mở bán"
+                item.status
                   ? "bg-green-500/20 text-green-400"
                   : "bg-red-500/20 text-red-400"
               }`}
             >
-              {status}
+              {item.status ? "Đang mở bán" : "Đóng bán"}
             </span>
           </div>
 
@@ -137,6 +134,17 @@ export default function ScheduleCard({ item, onView, onEdit, onDelete }) {
               className="w-11 h-11 rounded-xl bg-red-500/20 hover:bg-red-500 hover:text-white flex items-center justify-center transition"
             >
               <Trash2 size={18} />
+            </button>
+            <button
+              onClick={() => onToggleStatus(item)}
+              className={`px-4 h-11 rounded-xl flex items-center gap-2 transition ${
+                item.status
+                  ? "bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white"
+                  : "bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-white"
+              }`}
+            >
+              {item.status ? <Lock size={18} /> : <LockOpen size={18} />}
+              {item.status ? "Đóng bán" : "Mở bán"}
             </button>
           </div>
         </div>

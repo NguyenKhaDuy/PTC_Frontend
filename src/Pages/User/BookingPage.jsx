@@ -86,12 +86,16 @@ const createBooking = async ({
     bank,
   };
 
-  const res = await axios.post("http://localhost:3000/api/customer/booking", payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const res = await axios.post(
+    "http://localhost:3000/api/customer/booking",
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
 
   return res.data;
 };
@@ -184,13 +188,14 @@ export default function BookingPage() {
 
         const date = formatDate(schedule.date) === selectedDate;
 
-        return branch && date;
+        return branch && date && schedule.status === true;
       })
       .map((schedule) => ({
         idSchedule: schedule.idSchedule,
         time: formatTime(schedule.timeStart),
         room: schedule.roomDTO,
         basePrice: schedule.basePrice,
+        status: schedule.status,
       }));
   }, [movie, selectedBranch, selectedDate]);
 
