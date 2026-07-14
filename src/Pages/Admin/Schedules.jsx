@@ -202,6 +202,36 @@ export default function Schedules() {
 
   const finishedSchedules = schedules.filter((i) => i.date < today).length;
 
+  const handleToggleStatus = async (schedule) => {
+    try {
+      setLoading(true);
+
+      await axios.put(
+        `http://localhost:3000/api/admin/schedule/status`,
+        {
+          idSchedule: schedule.idSchedule,
+          status: !schedule.status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      showToast(
+        schedule.status ? "Đã đóng bán lịch chiếu" : "Đã mở bán lịch chiếu",
+        "success",
+      );
+
+      fetchSchedules(selectedMovie);
+    } catch (err) {
+      showToast("Cập nhật trạng thái thất bại", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   /* ================== HANDLERS ================== */
   const handlers = {
     view: fetchScheduleDetail,
@@ -214,6 +244,7 @@ export default function Schedules() {
       setDeletingId(id);
       setDeleteOpen(true);
     },
+    toggleStatus: handleToggleStatus,
   };
 
   /* ================== UI ================== */
